@@ -32,6 +32,8 @@ class _RecoverCardState extends State<_RecoverCard>
 
   late TextEditingController _nameController;
 
+  late TextEditingController _domainController;
+
   late AnimationController _submitController;
 
   @override
@@ -40,6 +42,8 @@ class _RecoverCardState extends State<_RecoverCard>
 
     final auth = Provider.of<Auth>(context, listen: false);
     _nameController = TextEditingController(text: auth.email);
+
+    _domainController = TextEditingController();
 
     _submitController = AnimationController(
       vsync: this,
@@ -88,16 +92,15 @@ class _RecoverCardState extends State<_RecoverCard>
     Auth auth,
   ) {
     return AnimatedTextFormField(
-      controller: _nameController,
+      controller: _domainController,
       loadingController: widget.loadingController,
       width: width,
-      labelText: messages.userHint,
-      prefixIcon: const Icon(FontAwesomeIcons.solidCircleUser),
+      labelText: messages.domainHint,
+      prefixIcon: const Icon(Icons.http),
       keyboardType: TextFieldUtils.getKeyboardType(widget.userType),
       autofillHints: [TextFieldUtils.getAutofillHints(widget.userType)],
       textInputAction: TextInputAction.done,
       onFieldSubmitted: (value) => _submit(),
-      validator: widget.userValidator,
       onSaved: (value) => auth.email = value!,
     );
   }
