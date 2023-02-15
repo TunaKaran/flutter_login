@@ -9,6 +9,7 @@ class _RecoverCard extends StatefulWidget {
     required this.navigateBack,
     required this.onSubmitCompleted,
     required this.loadingController,
+    this.domainTextField,
   });
 
   final FormFieldValidator<String>? userValidator;
@@ -17,6 +18,7 @@ class _RecoverCard extends StatefulWidget {
   final LoginTheme? loginTheme;
   final bool navigateBack;
   final AnimationController loadingController;
+  final Widget? domainTextField;
 
   final VoidCallback onSubmitCompleted;
 
@@ -32,8 +34,6 @@ class _RecoverCardState extends State<_RecoverCard>
 
   late TextEditingController _nameController;
 
-  late TextEditingController _domainController;
-
   late AnimationController _submitController;
 
   @override
@@ -42,8 +42,6 @@ class _RecoverCardState extends State<_RecoverCard>
 
     final auth = Provider.of<Auth>(context, listen: false);
     _nameController = TextEditingController(text: auth.email);
-
-    _domainController = TextEditingController();
 
     _submitController = AnimationController(
       vsync: this,
@@ -92,7 +90,7 @@ class _RecoverCardState extends State<_RecoverCard>
     Auth auth,
   ) {
     return AnimatedTextFormField(
-      controller: _domainController,
+      controller: _nameController,
       loadingController: widget.loadingController,
       width: width,
       labelText: messages.domainHint,
@@ -168,7 +166,9 @@ class _RecoverCardState extends State<_RecoverCard>
                   style: theme.textTheme.bodyText2,
                 ),
                 const SizedBox(height: 20),
-                _buildRecoverNameField(textFieldWidth, messages, auth),
+                if (widget.domainTextField == null)
+                  _buildRecoverNameField(textFieldWidth, messages, auth),
+                if (widget.domainTextField != null) widget.domainTextField!,
                 const SizedBox(height: 20),
                 Text(
                   auth.onConfirmRecover != null
