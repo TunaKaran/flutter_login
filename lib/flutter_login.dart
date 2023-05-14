@@ -808,11 +808,13 @@ class _FlutterLoginState extends State<FlutterLogin>
             SingleChildScrollView(
               child: Theme(
                 data: theme,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Positioned(
-                      child: AuthCard(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildHeader(headerHeight, loginTheme),
+                      footerWidget,
+                      AuthCard(
                         domainTextField: widget.domainTextField,
                         key: authCardKey,
                         userType: widget.userType,
@@ -838,19 +840,9 @@ class _FlutterLoginState extends State<FlutterLogin>
                             widget.confirmSignupKeyboardType,
                         introWidget: widget.headerWidget,
                       ),
-                    ),
-                    Positioned(
-                      top: cardTopPosition - headerHeight - headerMargin,
-                      child: _buildHeader(headerHeight, loginTheme),
-                    ),
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: footerWidget,
-                      ),
-                    ),
-                    ...?widget.children,
-                  ],
+                      ...?widget.children,
+                    ],
+                  ),
                 ),
               ),
             ),
