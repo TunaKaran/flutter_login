@@ -130,9 +130,11 @@ class _Header extends StatefulWidget {
     this.height = 250.0,
     this.logoController,
     this.titleController,
+    this.customLogoHeight,
     required this.loginTheme,
   });
 
+  final double? customLogoHeight;
   final ImageProvider? logo;
   final String? logoTag;
   final double logoWidth;
@@ -205,7 +207,7 @@ class __HeaderState extends State<_Header> {
         ? Image(
             image: widget.logo!,
             filterQuality: FilterQuality.high,
-            height: logoHeight,
+            height: widget.customLogoHeight ?? logoHeight,
             width: widget.logoWidth * cardWidth,
           )
         : const SizedBox.shrink();
@@ -305,8 +307,12 @@ class FlutterLogin extends StatefulWidget {
     this.headerWidget,
     this.onSwitchToAdditionalFields,
     this.domainTextField,
+    this.customHeight,
   })  : assert((logo is String?) || (logo is ImageProvider?)),
         logo = logo is String ? AssetImage(logo) : logo as ImageProvider?;
+
+  ///
+  final double? customHeight;
 
   /// Called when the user hit the submit button when in sign up mode
   ///
@@ -531,6 +537,7 @@ class _FlutterLoginState extends State<FlutterLogin>
       title: widget.title,
       titleTag: widget.titleTag,
       loginTheme: loginTheme,
+      customLogoHeight: widget.customHeight,
     );
   }
 
